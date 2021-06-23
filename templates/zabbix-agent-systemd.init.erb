@@ -1,6 +1,6 @@
 # THIS FILE IS MANAGED BY PUPPET
 [Unit]
-Description=Zabbix Agent
+Description=Zabbix Agent 2
 After=network.target
 
 [Service]
@@ -8,7 +8,7 @@ After=network.target
 Restart=on-failure
 <% if @pidfile %>PIDFile=<%= @pidfile %><% end %>
 KillMode=control-group
-ExecStart=/usr/sbin/zabbix_agentd <%= @additional_service_params %> -c <%= @agent_configfile_path %>
+ExecStart=/usr/sbin/zabbix_agent2 <%= @additional_service_params %> -c <%= @agent_configfile_path %>
 <% if @zabbix_user %>User=<%= @zabbix_user %><% end %>
 RestartSec=10s
 

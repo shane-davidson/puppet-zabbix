@@ -17,8 +17,8 @@
 . /etc/init.d/functions
 
 RETVAL=0
-prog="Zabbix Agent"
-ZABBIX_BIN="$(type -P zabbix_agentd)"
+prog="Zabbix Agent 2"
+ZABBIX_BIN="$(type -P zabbix_agent2)"
 OPTS="<%= @agent_configfile_path %>"
 
 if [ ! -x ${ZABBIX_BIN} ] ; then
@@ -31,7 +31,7 @@ start() {
         echo -n $"Starting $prog: "
         daemon "$ZABBIX_BIN -c $OPTS"
         RETVAL=$?
-        [ $RETVAL -eq 0 ] && touch /var/lock/subsys/zabbix_agentd
+        [ $RETVAL -eq 0 ] && touch /var/lock/subsys/zabbix_agent2
         echo
 }
 
@@ -39,7 +39,7 @@ stop() {
         echo -n $"Stopping $prog: "
         killproc $ZABBIX_BIN
         RETVAL=$?
-        [ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/zabbix_agentd
+        [ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/zabbix_agent2
         echo
 }
 
@@ -57,7 +57,7 @@ case "$1" in
         RETVAL=$?
         ;;
   condrestart)
-        if [ -f /var/lock/subsys/zabbix_agentd ]; then
+        if [ -f /var/lock/subsys/zabbix_agent2 ]; then
             stop
             start
         fi

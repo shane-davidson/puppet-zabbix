@@ -65,7 +65,7 @@
 #   Integer specifying type of interface to be created
 #
 # [*agent_configfile_path*]
-#   Agent config file path defaults to /etc/zabbix/zabbix_agentd.conf
+#   Agent config file path defaults to /etc/zabbix/zabbix_agent2.conf
 #
 # [*pidfile*]
 #   Name of pid file.
@@ -256,7 +256,7 @@
 #
 #  Basic installation:
 #  class { 'zabbix::agent':
-#    zabbix_version => '2.2',
+#    zabbix_version => '5.4',
 #    server         => '192.168.1.1',
 #  }
 #
@@ -447,14 +447,14 @@ class zabbix::agent (
     }
   }
 
-  if $agent_configfile_path != '/etc/zabbix/zabbix_agentd.conf' and $facts['kernel'] != 'windows' {
-    file { '/etc/zabbix/zabbix_agentd.conf':
+  if $agent_configfile_path != '/etc/zabbix/zabbix_agent2.conf' and $facts['kernel'] != 'windows' {
+    file { '/etc/zabbix/zabbix_agent2.conf':
       ensure  => absent,
       require => Package[$zabbix_package_agent],
     }
   }
 
-  # Controlling the 'zabbix-agent' service
+  # Controlling the 'zabbix-agent2' service
   service { $servicename:
     ensure  => $service_ensure,
     enable  => $service_enable,
@@ -479,7 +479,7 @@ class zabbix::agent (
     notify  => Service[$servicename],
     require => Package[$zabbix_package_agent],
     replace => true,
-    content => template('zabbix/zabbix_agentd.conf.erb'),
+    content => template('zabbix/zabbix_agent2.conf.erb'),
   }
 
   # Include dir for specific zabbix-agent checks.

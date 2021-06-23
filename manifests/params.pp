@@ -20,14 +20,14 @@ class zabbix::params {
       $proxy_fping6location     = '/usr/bin/fping6'
       $manage_repo              = true
       $manage_choco             = false
-      $zabbix_package_agent     = 'zabbix-agent'
-      $agent_configfile_path    = '/etc/zabbix/zabbix_agentd.conf'
+      $zabbix_package_agent     = 'zabbix-agent2'
+      $agent_configfile_path    = '/etc/zabbix/zabbix_agent2.conf'
       $agent_config_owner       = 'zabbix'
       $agent_zabbix_user        = 'zabbix'
       $agent_config_group       = 'zabbix'
-      $agent_pidfile            = '/var/run/zabbix/zabbix_agentd.pid'
-      $agent_servicename        = 'zabbix-agent'
-      $agent_include            = '/etc/zabbix/zabbix_agentd.d'
+      $agent_pidfile            = '/var/run/zabbix/zabbix_agent2.pid'
+      $agent_servicename        = 'zabbix-agent2'
+      $agent_include            = '/etc/zabbix/zabbix_agent2.d'
       $server_zabbix_user       = 'zabbix'
       $zabbix_package_provider  = undef
       $agent_loadmodulepath     = '/usr/lib/modules'
@@ -35,12 +35,12 @@ class zabbix::params {
     'AIX': {
       $manage_repo              = false
       $zabbix_package_provider  = 'yum'
-      $zabbix_package_agent     = 'zabbix-agent'
-      $agent_configfile_path    = '/etc/zabbix/zabbix_agentd.conf'
+      $zabbix_package_agent     = 'zabbix-agent2'
+      $agent_configfile_path    = '/etc/zabbix/zabbix_agent2.conf'
       $agent_config_owner       = 'zabbix'
       $agent_zabbix_user        = 'zabbix'
       $agent_config_group       = 'zabbix'
-      $agent_pidfile            = '/var/run/zabbix/zabbix_agentd.pid'
+      $agent_pidfile            = '/var/run/zabbix/zabbix_agent2.pid'
       $agent_servicename        = 'zabbix-agent'
     }
 
@@ -51,14 +51,14 @@ class zabbix::params {
       $proxy_fping6location     = '/usr/bin/fping6'
       $manage_repo              = false
       $manage_choco             = false
-      $zabbix_package_agent     = 'zabbix-agent'
-      $agent_configfile_path    = '/etc/zabbix/zabbix_agentd.conf'
+      $zabbix_package_agent     = 'zabbix-agent2'
+      $agent_configfile_path    = '/etc/zabbix/zabbix_agent2.conf'
       $agent_config_owner       = 'zabbix-agent'
       $agent_zabbix_user        = 'zabbix-agent'
       $agent_config_group       = 'zabbix-agent'
       $agent_pidfile            = undef
-      $agent_servicename        = 'zabbix-agent'
-      $agent_include            = '/etc/zabbix/zabbix_agentd.d'
+      $agent_servicename        = 'zabbix-agent2'
+      $agent_include            = '/etc/zabbix/zabbix_agent2.d'
       $server_zabbix_user       = 'zabbix-server'
       $zabbix_package_provider  = undef
       $agent_loadmodulepath     = '/usr/lib/modules'
@@ -70,14 +70,14 @@ class zabbix::params {
       $proxy_fping6location     = '/usr/sbin/fping6'
       $manage_repo              = false
       $manage_choco             = false
-      $zabbix_package_agent     = 'zabbix-agent'
-      $agent_configfile_path    = '/etc/zabbix_agentd.conf'
+      $zabbix_package_agent     = 'zabbix-agent2'
+      $agent_configfile_path    = '/etc/zabbix_agent2.conf'
       $agent_config_owner       = 'zabbix'
       $agent_zabbix_user        = 'zabbix'
       $agent_config_group       = 'zabbix'
-      $agent_pidfile            = '/var/run/zabbix/zabbix_agentd.pid'
-      $agent_servicename        = 'zabbix-agent'
-      $agent_include            = '/etc/zabbix/zabbix_agentd.d'
+      $agent_pidfile            = '/var/run/zabbix/zabbix_agent2.pid'
+      $agent_servicename        = 'zabbix-agent2'
+      $agent_include            = '/etc/zabbix/zabbix_agent2.d'
       $server_zabbix_user       = 'zabbix'
       $zabbix_package_provider  = undef
       $agent_loadmodulepath     = '/usr/lib/modules'
@@ -90,13 +90,13 @@ class zabbix::params {
       $manage_repo              = false
       $manage_choco             = false
       $zabbix_package_agent     = 'zabbix'
-      $agent_configfile_path    = '/etc/zabbix/zabbix_agentd.conf'
+      $agent_configfile_path    = '/etc/zabbix/zabbix_agent2.conf'
       $agent_config_owner       = 'zabbix'
       $agent_zabbix_user        = 'zabbix'
       $agent_config_group       = 'zabbix'
-      $agent_pidfile            = '/var/run/zabbix/zabbix_agentd.pid'
-      $agent_servicename        = 'zabbix-agentd'
-      $agent_include            = '/etc/zabbix/zabbix_agentd.d'
+      $agent_pidfile            = '/var/run/zabbix/zabbix_agent2.pid'
+      $agent_servicename        = 'zabbix-agent2'
+      $agent_include            = '/etc/zabbix/zabbix_agent2.d'
       $server_zabbix_user       = 'zabbix'
       $zabbix_package_provider  = undef
       $agent_loadmodulepath     = '/usr/lib/modules'
@@ -104,15 +104,15 @@ class zabbix::params {
     'windows': {
       $manage_repo             = false
       $manage_choco            = true
-      $zabbix_package_agent    = 'zabbix-agent'
+      $zabbix_package_agent    = 'zabbix-agent2'
       $zabbix_package_provider = 'chocolatey'
-      $agent_configfile_path   = 'C:/ProgramData/zabbix/zabbix_agentd.conf'
+      $agent_configfile_path   = 'C:/ProgramData/zabbix/zabbix_agent2.conf'
       $agent_config_owner      = undef
       $agent_zabbix_user       = undef
       $agent_config_group      = undef
-      $agent_pidfile           = 'C:/ProgramData/zabbix/zabbix_agentd.pid'
-      $agent_servicename       = 'Zabbix Agent'
-      $agent_include           = 'C:/ProgramData/zabbix/zabbix_agentd.d'
+      $agent_pidfile           = 'C:/ProgramData/zabbix/zabbix_agent2.pid'
+      $agent_servicename       = 'Zabbix Agent 2'
+      $agent_include           = 'C:/ProgramData/zabbix/zabbix_agent2.d'
       $agent_loadmodulepath    = undef
     }
     default  : {
@@ -122,14 +122,14 @@ class zabbix::params {
       $proxy_fping6location     = '/usr/sbin/fping6'
       $manage_repo              = true
       $manage_choco             = false
-      $zabbix_package_agent     = 'zabbix-agent'
-      $agent_configfile_path    = '/etc/zabbix/zabbix_agentd.conf'
+      $zabbix_package_agent     = 'zabbix-agent2'
+      $agent_configfile_path    = '/etc/zabbix/zabbix_agent2.conf'
       $agent_config_owner       = 'zabbix'
       $agent_zabbix_user        = 'zabbix'
       $agent_config_group       = 'zabbix'
-      $agent_pidfile            = '/var/run/zabbix/zabbix_agentd.pid'
-      $agent_include            = '/etc/zabbix/zabbix_agentd.d'
-      $agent_servicename        = 'zabbix-agent'
+      $agent_pidfile            = '/var/run/zabbix/zabbix_agent2.pid'
+      $agent_include            = '/etc/zabbix/zabbix_agent2.d'
+      $agent_servicename        = 'zabbix-agent2'
       $server_zabbix_user       = 'zabbix'
       $zabbix_package_provider  = undef
       $agent_loadmodulepath     = '/usr/lib/modules'

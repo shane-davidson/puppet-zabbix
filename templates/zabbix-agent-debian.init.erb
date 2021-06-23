@@ -1,6 +1,6 @@
 #! /bin/sh
 ### BEGIN INIT INFO
-# Provides:          zabbix-agent
+# Provides:          zabbix-agent2
 # Required-Start:    $remote_fs $network 
 # Required-Stop:     $remote_fs
 # Default-Start:     2 3 4 5
@@ -10,7 +10,7 @@
 
 set -e
 
-NAME=zabbix_agentd
+NAME=zabbix_agent2
 DAEMON=/usr/sbin/$NAME
 DAEMON_OPTS="-c <%= @agent_configfile_path %>"
 DESC="Zabbix agent"
