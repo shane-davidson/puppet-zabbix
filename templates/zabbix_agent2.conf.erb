@@ -201,13 +201,6 @@ BufferSize=<%= @buffersize %>
 #
 Timeout=<%= @timeout %>
 
-<% if @kernel != 'windows' %>
-### Option: User
-#	Drop privileges to a specific, existing user on the system.
-#	Only has effect if run as 'root' and AllowRoot is disabled.
-#
-<% if @zabbix_user %>User=<%= @zabbix_user %><% end %>
-<% end %>
 
 ### Option: Include
 #	You may include individual files or all files in a directory in the configuration file.
