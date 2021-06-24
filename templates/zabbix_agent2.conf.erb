@@ -202,17 +202,6 @@ BufferSize=<%= @buffersize %>
 Timeout=<%= @timeout %>
 
 <% if @kernel != 'windows' %>
-### Option: AllowRoot
-#	Allow the agent to run as 'root'. If disabled and the agent is started by 'root', the agent
-#	will try to switch to the user specified by the User configuration option instead.
-#	Has no effect if started under a regular user.
-#	0 - do not allow
-#	1 - allow
-#
-AllowRoot=<%= @allowroot %>
-<% end %>
-
-<% if @kernel != 'windows' %>
 ### Option: User
 #	Drop privileges to a specific, existing user on the system.
 #	Only has effect if run as 'root' and AllowRoot is disabled.

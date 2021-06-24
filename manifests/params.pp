@@ -309,7 +309,6 @@ class zabbix::params {
   $server_socketdir                         = undef
 
   # Agent specific params
-  $agent_allowroot                          = '0'
   $agent_buffersend                         = '5'
   $agent_buffersize                         = '100'
   $agent_debuglevel                         = '3'

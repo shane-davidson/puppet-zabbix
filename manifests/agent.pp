@@ -157,13 +157,8 @@
 # [*buffersize*]
 #   Maximum number of values in a memory buffer.
 #
-#
-# [*allowroot*]
-#   Allow the agent to run as 'root'.
-#
 # [*zabbix_user*]
 #   Drop privileges to a specific, existing user on the system.
-#   Only has effect if run as 'root' and AllowRoot is disabled.
 #
 # [*zabbix_alias*]
 #   Sets an alias for parameter.
@@ -315,7 +310,6 @@ class zabbix::agent (
   $buffersize                                     = $zabbix::params::agent_buffersize,
   Optional[Array] $zabbix_alias                   = $zabbix::params::agent_zabbix_alias,
   $timeout                                        = $zabbix::params::agent_timeout,
-  $allowroot                                      = $zabbix::params::agent_allowroot,
   Optional[String[1]] $zabbix_user                = $zabbix::params::agent_zabbix_user,
   $include_dir                                    = $zabbix::params::agent_include,
   $include_dir_purge                              = $zabbix::params::agent_include_purge,
