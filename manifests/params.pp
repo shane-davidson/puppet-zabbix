@@ -326,7 +326,6 @@ class zabbix::params {
   $agent_listenip                           = undef
   $agent_listenport                         = '10050'
   $agent_loadmodule                         = undef
-  $agent_logremotecommands                  = '0'
   $agent_maxlinespersecond                  = '100'
   $agent_refreshactivechecks                = '120'
   $agent_server                             = '127.0.0.1'

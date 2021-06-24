@@ -97,8 +97,6 @@
 # [*enableremotecommands*]
 #   Whether remote commands from zabbix server are allowed.
 #
-# [*logremotecommands*]
-#   Enable logging of executed shell commands as warnings.
 #
 # [*server*]
 #   List of comma delimited ip addresses (or hostnames) of zabbix servers.
@@ -305,7 +303,6 @@ class zabbix::agent (
   Optional[String[1]] $allowkey                   = $zabbix::params::agent_allowkey,
   Optional[String[1]] $denykey                    = $zabbix::params::agent_denykey,
   $enableremotecommands                           = $zabbix::params::agent_enableremotecommands,
-  $logremotecommands                              = $zabbix::params::agent_logremotecommands,
   $server                                         = $zabbix::params::agent_server,
   $listenport                                     = $zabbix::params::agent_listenport,
   $listenip                                       = $zabbix::params::agent_listenip,
