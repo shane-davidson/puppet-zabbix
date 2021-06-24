@@ -228,15 +228,6 @@ UnsafeUserParameters=<%= @unsafeuserparameters %>
 #
 # 	Disabled. A configuration file should be placed on directory: <%= @include %>
 
-####### LOADABLE MODULES #######
-
-### Option: LoadModule
-#	Module to load at agent startup. Modules are used to extend functionality of the agent.
-#	Format: LoadModule=<module.so>
-#	The modules must be located in directory specified by LoadModulePath.
-#	It is allowed to include multiple LoadModule parameters.
-#
-<% if @loadmodule %>LoadModule=<%= @loadmodule %><% end %>
 
 ####### TLS-RELATED PARAMETERS #######
 
