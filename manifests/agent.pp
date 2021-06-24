@@ -280,6 +280,7 @@ class zabbix::agent (
   $zabbix_version                                 = $zabbix::params::zabbix_version,
   $zabbix_package_state                           = $zabbix::params::zabbix_package_state,
   $zabbix_package_agent                           = $zabbix::params::zabbix_package_agent,
+  $zabbix_package_agent_old                       = $zabbix::params::zabbix_package_agent_old,
   Optional[String[1]] $zabbix_package_provider    = $zabbix::params::zabbix_package_provider,
   Boolean $manage_choco                           = $zabbix::params::manage_choco,
   Boolean $manage_firewall                        = $zabbix::params::manage_firewall,
@@ -418,6 +419,13 @@ class zabbix::agent (
   }
 
   if $facts['kernel'] == 'windows' and $manage_choco {
+    # Remove old version
+    package { $zabbix_package_agent_old:
+      ensure   => absent,
+      provider => $zabbix_package_provider,
+      tag      => 'zabbix',
+    }
+
     package { $zabbix_package_agent:
       ensure   => $zabbix_version,
       provider => $zabbix_package_provider,
@@ -425,6 +433,14 @@ class zabbix::agent (
     }
   }
   else {
+    # Remove old version
+    package { $zabbix_package_agent_old:
+      ensure   => absent,
+      require  => Class['zabbix::repo'],
+      tag      => 'zabbix',
+      provider => $zabbix_package_provider,
+    }
+
     # Installing the package
     package { $zabbix_package_agent:
       ensure   => $zabbix_package_state,
