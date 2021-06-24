@@ -229,13 +229,6 @@ UnsafeUserParameters=<%= @unsafeuserparameters %>
 # 	Disabled. A configuration file should be placed on directory: <%= @include %>
 
 ####### LOADABLE MODULES #######
-<% if @kernel != 'windows' %>
-### Option: LoadModulePath
-#	Full path to location of agent modules.
-#	Default depends on compilation options.
-#
-LoadModulePath=<%= @loadmodulepath %>
-<% end %>
 
 ### Option: LoadModule
 #	Module to load at agent startup. Modules are used to extend functionality of the agent.

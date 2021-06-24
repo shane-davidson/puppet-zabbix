@@ -31,7 +31,6 @@ class zabbix::params {
       $agent_include            = '/etc/zabbix/zabbix_agent2.d'
       $server_zabbix_user       = 'zabbix'
       $zabbix_package_provider  = undef
-      $agent_loadmodulepath     = '/usr/lib/modules'
     }
     'AIX': {
       $manage_repo              = false
@@ -64,7 +63,6 @@ class zabbix::params {
       $agent_include            = '/etc/zabbix/zabbix_agent2.d'
       $server_zabbix_user       = 'zabbix-server'
       $zabbix_package_provider  = undef
-      $agent_loadmodulepath     = '/usr/lib/modules'
     }
     'Fedora': {
       $server_fpinglocation     = '/usr/sbin/fping'
@@ -84,7 +82,6 @@ class zabbix::params {
       $agent_include            = '/etc/zabbix/zabbix_agent2.d'
       $server_zabbix_user       = 'zabbix'
       $zabbix_package_provider  = undef
-      $agent_loadmodulepath     = '/usr/lib/modules'
     }
     'Gentoo': {
       $server_fpinglocation     = '/usr/sbin/fping'
@@ -104,7 +101,6 @@ class zabbix::params {
       $agent_include            = '/etc/zabbix/zabbix_agent2.d'
       $server_zabbix_user       = 'zabbix'
       $zabbix_package_provider  = undef
-      $agent_loadmodulepath     = '/usr/lib/modules'
     }
     'windows': {
       $manage_repo              = false
@@ -119,7 +115,6 @@ class zabbix::params {
       $agent_pidfile            = 'C:/ProgramData/zabbix/zabbix_agent2.pid'
       $agent_servicename        = 'Zabbix Agent 2'
       $agent_include            = 'C:/ProgramData/zabbix/zabbix_agent2.d'
-      $agent_loadmodulepath     = undef
     }
     default  : {
       $server_fpinglocation     = '/usr/sbin/fping'
@@ -139,7 +134,6 @@ class zabbix::params {
       $agent_servicename        = 'zabbix-agent2'
       $server_zabbix_user       = 'zabbix'
       $zabbix_package_provider  = undef
-      $agent_loadmodulepath     = '/usr/lib/modules'
     }
   }
 
@@ -324,7 +318,6 @@ class zabbix::params {
   $agent_include_purge                      = true
   $agent_listenip                           = undef
   $agent_listenport                         = '10050'
-  $agent_loadmodule                         = undef
   $agent_refreshactivechecks                = '120'
   $agent_server                             = '127.0.0.1'
   $agent_serveractive                       = undef

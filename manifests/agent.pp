@@ -229,12 +229,6 @@
 # [*userparameter*]
 #   User-defined parameter to monitor.
 #
-# [*loadmodulepath*]
-#   Full path to location of agent modules.
-#
-# [*loadmodule*]
-#   Module to load at agent startup.
-#
 # [*manage_startup_script*]
 #  If the init script should be managed by this module. Attention: This might
 #  cause problems with some config options of this module (e.g
@@ -315,8 +309,6 @@ class zabbix::agent (
   $include_dir_purge                              = $zabbix::params::agent_include_purge,
   $unsafeuserparameters                           = $zabbix::params::agent_unsafeuserparameters,
   $userparameter                                  = $zabbix::params::agent_userparameter,
-  Optional[String[1]] $loadmodulepath             = $zabbix::params::agent_loadmodulepath,
-  $loadmodule                                     = $zabbix::params::agent_loadmodule,
   $tlsaccept                                      = $zabbix::params::agent_tlsaccept,
   $tlscafile                                      = $zabbix::params::agent_tlscafile,
   $tlscertfile                                    = $zabbix::params::agent_tlscertfile,
