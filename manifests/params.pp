@@ -333,7 +333,6 @@ class zabbix::params {
   $agent_service_ensure                     = 'running'
   $agent_service_enable                     = true
   $agent_sourceip                           = undef
-  $agent_startagents                        = '3'
   $agent_timeout                            = '3'
   $agent_tlsaccept                          = undef
   $agent_tlscafile                          = undef

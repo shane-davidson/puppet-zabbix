@@ -104,12 +104,6 @@ ListenPort=<%= @listenport %>
 #
 <% if @listen_ip %>ListenIP=<%= @listen_ip %><% end %>
 
-### Option: StartAgents
-#	Number of pre-forked instances of zabbix_agentd that process passive checks.
-#	If set to 0, disables passive checks and the agent will not listen on any TCP port.
-#
-StartAgents=<%= @startagents %>
-
 ##### Active checks related
 
 ### Option: ServerActive

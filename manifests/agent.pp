@@ -115,8 +115,6 @@
 #   It will find out which ip is configured for this ipaddress. Can be handy
 #   if more than 1 interface is on the server.
 #
-# [*startagents*]
-#   Number of pre-forked instances of zabbix_agentd that process passive checks.
 #
 # [*serveractive*]
 #   List of comma delimited ip:port (or hostname:port) pairs of zabbix servers for active checks.
@@ -306,7 +304,6 @@ class zabbix::agent (
   $server                                         = $zabbix::params::agent_server,
   $listenport                                     = $zabbix::params::agent_listenport,
   $listenip                                       = $zabbix::params::agent_listenip,
-  $startagents                                    = $zabbix::params::agent_startagents,
   $serveractive                                   = $zabbix::params::agent_serveractive,
   Stdlib::Ensure::Service $service_ensure         = $zabbix::params::agent_service_ensure,
   Boolean $service_enable                         = $zabbix::params::agent_service_enable,
