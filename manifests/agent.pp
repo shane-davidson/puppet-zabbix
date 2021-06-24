@@ -157,9 +157,6 @@
 # [*buffersize*]
 #   Maximum number of values in a memory buffer.
 #
-# [*maxlinespersecond*]
-#   Maximum number of new lines the agent will send per second to zabbix server
-#   or proxy processing.
 #
 # [*allowroot*]
 #   Allow the agent to run as 'root'.
@@ -316,7 +313,6 @@ class zabbix::agent (
   $refreshactivechecks                            = $zabbix::params::agent_refreshactivechecks,
   $buffersend                                     = $zabbix::params::agent_buffersend,
   $buffersize                                     = $zabbix::params::agent_buffersize,
-  $maxlinespersecond                              = $zabbix::params::agent_maxlinespersecond,
   Optional[Array] $zabbix_alias                   = $zabbix::params::agent_zabbix_alias,
   $timeout                                        = $zabbix::params::agent_timeout,
   $allowroot                                      = $zabbix::params::agent_allowroot,
