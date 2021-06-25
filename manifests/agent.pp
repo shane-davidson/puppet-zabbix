@@ -519,7 +519,7 @@ class zabbix::agent (
       zabbix_user               => $zabbix_user,
       additional_service_params => $additional_service_params,
       service_type              => $service_type,
-      binary_name               => $agent_binary_name,
+      binary_name               => $binary_name,
       service_name              => 'zabbix-agent',
       require                   => Package[$_package],
     }
