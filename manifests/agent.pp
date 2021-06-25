@@ -370,49 +370,59 @@ class zabbix::agent (
   # set variables for agent or agent2
   if $zabbix_package_agent == undef {
     if $install_agent2 {
-      $zabbix_package_agent = $zabbix::params::zabbix_package_agent2
+      $_package              = $zabbix::params::zabbix_package_agent2
     } else {
-      $zabbix_package_agent = $zabbix::params::zabbix_package_agent
+      $_package              = $zabbix::params::zabbix_package_agent
     }
+  } else {
+    $_package                = $zabbix_package_agent
   }
 
   if $servicename == undef {
     if $install_agent2 {
-      $servicename          = $zabbix::params::agent2_servicename
+      $_servicename          = $zabbix::params::agent2_servicename
     } else {
-      $servicename          = $zabbix::params::agent_servicename
+      $_servicename          = $zabbix::params::agent_servicename
     }
+  } else {
+    $_servicename            = $servicename
   }
 
-  if $configfile_path == undef {
+  if $agent_configfile_path == undef {
     if $install_agent2 {
-      $configfile_path      = $zabbix::params::agent2_configfile_path
+      $_configfile_path      = $zabbix::params::agent2_configfile_path
     } else {
-      $configfile_path      = $zabbix::params::agent_configfile_path
+      $_configfile_path      = $zabbix::params::agent_configfile_path
     }
+  } else {
+    $_configfile_path        = $agent_configfile_path
   }
 
   if $pidfile == undef {
     if $install_agent2 {
-      $pidfile              = $zabbix::params::agent2_pidfile
+      $_pidfile              = $zabbix::params::agent2_pidfile
     } else {
-      $pidfile              = $zabbix::params::agent_pidfile
+      $_pidfile              = $zabbix::params::agent_pidfile
     }
+  } else {
+    $_pidfile                = $pidfile
   }
 
   if $include_dir == undef {
     if $install_agent2 {
-      $include_dir          = $zabbix::params::agent2_include_dir
+      $_include_dir          = $zabbix::params::agent2_include_dir
     } else {
-      $include_dir          = $zabbix::params::agent_include_dir
+      $_include_dir          = $zabbix::params::agent_include_dir
     }
+  } else {
+    $_include_dir            = $include_dir
   }
   
-  if $agent_binary_name == undef {
+  if $binary_name == undef {
     if $install_agent2 {
-      $agent_binary_name    = $zabbix::params::agent_binary_name
+      $binary_name    = $zabbix::params::agent_binary_name
     } else {
-      $agent_binary_name    = $zabbix::params::agent2_binary_name
+      $binary_name    = $zabbix::params::agent2_binary_name
     }
   }
 
@@ -478,7 +488,7 @@ class zabbix::agent (
 
   if $install_agent2 {
     # Ensure old agent is removed
-    package { $zabbix::params::zabbix_package_agent:
+    package { $_package:
       ensure   => absent,
       tag      => 'zabbix',
       provider => $zabbix_package_provider,
@@ -486,7 +496,7 @@ class zabbix::agent (
   }
 
   if $facts['kernel'] == 'windows' and $manage_choco {
-    package { $zabbix_package_agent:
+    package { $_package:
       ensure   => $zabbix_version,
       provider => $zabbix_package_provider,
       tag      => 'zabbix',
@@ -494,7 +504,7 @@ class zabbix::agent (
   }
   else {
     # Installing the package
-    package { $zabbix_package_agent:
+    package { $_package:
       ensure   => $zabbix_package_state,
       require  => Class['zabbix::repo'],
       tag      => 'zabbix',
@@ -504,62 +514,71 @@ class zabbix::agent (
 
   # Ensure that the correct config file is used.
   if $manage_startup_script {
-    zabbix::startup { $servicename:
-      pidfile                   => $pidfile,
-      agent_configfile_path     => $agent_configfile_path,
+    zabbix::startup { $_servicename:
+      pidfile                   => $_pidfile,
+      agent_configfile_path     => $_configfile_path,
       zabbix_user               => $zabbix_user,
       additional_service_params => $additional_service_params,
       service_type              => $service_type,
       binary_name               => $agent_binary_name,
       service_name              => 'zabbix-agent',
-      require                   => Package[$zabbix_package_agent],
+      require                   => Package[$_package],
     }
   }
 
-  if $agent_configfile_path != '/etc/zabbix/zabbix_agentd.conf' and $facts['kernel'] != 'windows' {
-    file { '/etc/zabbix/zabbix_agentd.conf':
-      ensure  => absent,
-      require => Package[$zabbix_package_agent],
+  if $install_agent2 {
+    if $_configfile_path != '/etc/zabbix/zabbix_agent2.conf' and $facts['kernel'] != 'windows' {
+      file { '/etc/zabbix/zabbix_agent2.conf':
+        ensure  => absent,
+        require => Package[$_package],
+      }
+    }
+  } else {
+    if $_configfile_path != '/etc/zabbix/zabbix_agentd.conf' and $facts['kernel'] != 'windows' {
+      file { '/etc/zabbix/zabbix_agentd.conf':
+        ensure  => absent,
+        require => Package[$_package],
+      }
     }
   }
 
   # Controlling the 'zabbix-agent' service
-  service { $servicename:
+  service { $_servicename:
     ensure  => $service_ensure,
     enable  => $service_enable,
-    require => Package[$zabbix_package_agent],
+    require => Package[$_package],
   }
 
   # Override the service provider on AIX
   # Doing it this way allows overriding it on other platforms
   if $facts['os']['name'] == 'AIX' {
-    Service[$servicename] {
+    Service[$_servicename] {
       service_provider => 'init',
       service_path     => '/etc/rc.d/init.d',
     }
   }
 
   # Configuring the zabbix-agent configuration file
-  file { $agent_configfile_path:
+  file { $_configfile_path:
     ensure  => file,
     owner   => $agent_config_owner,
     group   => $agent_config_group,
     mode    => '0644',
-    notify  => Service[$servicename],
-    require => Package[$zabbix_package_agent],
+    notify  => Service[$_servicename],
+    require => Package[$_package],
     replace => true,
     content => template('zabbix/zabbix_agentd.conf.erb'),
   }
 
   # Include dir for specific zabbix-agent checks.
-  file { $include_dir:
+  file { $_include_dir:
     ensure  => directory,
     owner   => $agent_config_owner,
     group   => $agent_config_group,
     recurse => true,
     purge   => $include_dir_purge,
-    notify  => Service[$servicename],
-    require => File[$agent_configfile_path],
+    notify  => Service[$_servicename],
+    require => File[$_configfile_path],
   }
 
   # Manage firewall
@@ -585,7 +604,7 @@ class zabbix::agent (
     selinux::module { 'zabbix-agent':
       ensure     => 'present',
       content_te => template('zabbix/selinux/zabbix-agent.te.erb'),
-      before     => Service[$servicename],
+      before     => Service[$_servicename],
     }
   }
 }
