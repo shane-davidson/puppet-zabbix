@@ -419,9 +419,9 @@ class zabbix::agent (
   }
   
   if $install_agent2 {
-    $binary_name             = $zabbix::params::agent_binary_name
-  } else {
     $binary_name             = $zabbix::params::agent2_binary_name
+  } else {
+    $binary_name             = $zabbix::params::agent_binary_name
   }
 
 
