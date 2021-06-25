@@ -412,9 +412,9 @@ class zabbix::agent (
     $_include_dir            = $include_dir
   } else {
     if $install_agent2 {
-      $_include_dir          = $zabbix::params::agent2_include_dir
+      $_include_dir          = $zabbix::params::agent2_include
     } else {
-      $_include_dir          = $zabbix::params::agent_include_dir
+      $_include_dir          = $zabbix::params::agent_include
     }
   }
   
