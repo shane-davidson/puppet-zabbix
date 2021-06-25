@@ -488,7 +488,7 @@ class zabbix::agent (
 
   if $install_agent2 {
     # Ensure old agent is removed
-    package { $_package:
+    package { $zabbix::params::zabbix_package_agent:
       ensure   => absent,
       tag      => 'zabbix',
       provider => $zabbix_package_provider,
