@@ -259,7 +259,7 @@
 #
 #  Basic installation:
 #  class { 'zabbix::agent':
-#    zabbix_version => '2.2',
+#    zabbix_version => '5.4',
 #    server         => '192.168.1.1',
 #  }
 #
@@ -467,6 +467,15 @@ class zabbix::agent (
     class { 'zabbix::repo':
       manage_repo    => $manage_repo,
       zabbix_version => $zabbix_version,
+    }
+  }
+
+  if $install_agent2 {
+    # Ensure old agent is removed
+    package { $zabbix::params::zabbix_package_agent:
+      ensure   => absent,
+      tag      => 'zabbix',
+      provider => $zabbix_package_provider,
     }
   }
 
