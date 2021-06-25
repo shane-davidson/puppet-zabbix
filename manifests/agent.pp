@@ -368,46 +368,52 @@ class zabbix::agent (
   Boolean $manage_startup_script                  = $zabbix::params::manage_startup_script,
 ) inherits zabbix::params {
   # set variables for agent or agent2
-  if $install_agent2 and ($zabbix_package_agent != undef)  {
-    $zabbix_package_agent = $zabbix::params::zabbix_package_agent2
-  } else {
-    $zabbix_package_agent = $zabbix::params::zabbix_package_agent
+  if $zabbix_package_agent == undef {
+    if $install_agent2 {
+      $zabbix_package_agent = $zabbix::params::zabbix_package_agent2
+    } else {
+      $zabbix_package_agent = $zabbix::params::zabbix_package_agent
+    }
   }
 
-  if $install_agent2 and ($servicename != undef)  {
-    $servicename          = $zabbix::params::agent2_servicename
-  } else {
-    $servicename          = $zabbix::params::agent_servicename
+  if $servicename == undef {
+    if $install_agent2 {
+      $servicename          = $zabbix::params::agent2_servicename
+    } else {
+      $servicename          = $zabbix::params::agent_servicename
+    }
   }
 
-  if $install_agent2 and ($configfile_path != undef)  {
-    $configfile_path      = $zabbix::params::agent2_configfile_path
-  } else {
-    $configfile_path      = $zabbix::params::agent_configfile_path
+  if $configfile_path == undef {
+    if $install_agent2 {
+      $configfile_path      = $zabbix::params::agent2_configfile_path
+    } else {
+      $configfile_path      = $zabbix::params::agent_configfile_path
+    }
   }
 
-  if $install_agent2 and ($pidfile != undef)  {
-    $pidfile              = $zabbix::params::agent2_pidfile
-  } else {
-    $pidfile              = $zabbix::params::agent_pidfile
+  if $pidfile == undef {
+    if $install_agent2 {
+      $pidfile              = $zabbix::params::agent2_pidfile
+    } else {
+      $pidfile              = $zabbix::params::agent_pidfile
+    }
   }
 
-  if $install_agent2 and ($include_dir != undef)  {
-    $include_dir          = $zabbix::params::agent2_include_dir
-  } else {
-    $include_dir          = $zabbix::params::agent_include_dir
-  }
-
-  if $install_agent2 and ($include_dir != undef)  {
-    $include_dir          = $zabbix::params::agent2_include_dir
-  } else {
-    $include_dir          = $zabbix::params::agent_include_dir
+  if $include_dir == undef {
+    if $install_agent2 {
+      $include_dir          = $zabbix::params::agent2_include_dir
+    } else {
+      $include_dir          = $zabbix::params::agent_include_dir
+    }
   }
   
-  if $install_agent2 and ($agent_binary_name != undef)  {
-    $agent_binary_name    = $zabbix::params::agent_binary_name
-  } else {
-    $agent_binary_name    = $zabbix::params::agent2_binary_name
+  if $agent_binary_name == undef {
+    if $install_agent2 {
+      $agent_binary_name    = $zabbix::params::agent_binary_name
+    } else {
+      $agent_binary_name    = $zabbix::params::agent2_binary_name
+    }
   }
 
   # Find if listenip is set. If not, we can set to specific ip or
