@@ -558,16 +558,33 @@ class zabbix::agent (
   }
 
   # Configuring the zabbix-agent configuration file
-  file { $_configfile_path:
-    ensure  => file,
-    owner   => $agent_config_owner,
-    group   => $agent_config_group,
-    mode    => '0644',
-    notify  => Service[$_servicename],
-    require => Package[$_package],
-    replace => true,
-    content => template('zabbix/zabbix_agentd.conf.erb'),
+  if $install_agent2 {
+    file { $_configfile_path:
+      ensure  => file,
+      owner   => $agent_config_owner,
+      group   => $agent_config_group,
+      mode    => '0644',
+      notify  => Service[$_servicename],
+      require => Package[$_package],
+      replace => true,
+      content => template('zabbix/zabbix_agent2.conf.erb'),
+    }
+
+    # Should we remove the old config file here?
+
+  } else {
+    file { $_configfile_path:
+      ensure  => file,
+      owner   => $agent_config_owner,
+      group   => $agent_config_group,
+      mode    => '0644',
+      notify  => Service[$_servicename],
+      require => Package[$_package],
+      replace => true,
+      content => template('zabbix/zabbix_agentd.conf.erb'),
+    }
   }
+
 
   # Include dir for specific zabbix-agent checks.
   file { $_include_dir:
