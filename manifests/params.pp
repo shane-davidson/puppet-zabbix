@@ -147,7 +147,8 @@ class zabbix::params {
       $agent_config_group      = undef
       $agent_pidfile           = 'C:/ProgramData/zabbix/zabbix_agentd.pid'
       $agent2_pidfile          = 'C:/ProgramData/zabbix/zabbix_agent2.pid'
-      $agent_servicename       = 'Zabbix Agent2'
+      $agent_servicename       = 'Zabbix Agent'
+      $agent2_servicename      = 'Zabbix Agent2'
       $agent_include           = 'C:/ProgramData/zabbix/zabbix_agentd.d'
       $agent2_include          = 'C:/ProgramData/zabbix/zabbix_agent2.d'
       $agent_loadmodulepath    = undef
