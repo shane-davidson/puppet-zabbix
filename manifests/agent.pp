@@ -14,6 +14,9 @@
 # [*zabbix_version*]
 #   This is the zabbix version.
 #
+# [*install_agent2*]
+#   When true, it will install agent2 package and remove agent package.
+#
 # [*zabbix_package_state*]
 #   The state of the package that needs to be installed: present or latest.
 #   Default: present
@@ -67,7 +70,7 @@
 # [*agent_configfile_path*]
 #   Agent config file path defaults to /etc/zabbix/zabbix_agentd.conf
 #
-# [*pidfile*]
+# [*agent_pidfile*]
 #   Name of pid file.
 #
 # [*logfile*]
@@ -267,6 +270,12 @@
 #    server             => '192.168.1.1',
 #  }
 #
+#  Install old zabbix agent:
+#  class { 'zabbix::agent':
+#    install_agent2     => false,
+#    server             => '192.168.1.1',
+#  }
+#
 # === Authors
 #
 # Author Name: ikben@werner-dijkerman.nl
@@ -278,8 +287,9 @@
 
 class zabbix::agent (
   $zabbix_version                                 = $zabbix::params::zabbix_version,
+  Boolean $install_agent2                         = $zabbix::params::install_agent2,
   $zabbix_package_state                           = $zabbix::params::zabbix_package_state,
-  $zabbix_package_agent                           = $zabbix::params::zabbix_package_agent,
+  Optional[String[1]] $zabbix_package_agent       = undef,
   Optional[String[1]] $zabbix_package_provider    = $zabbix::params::zabbix_package_provider,
   Boolean $manage_choco                           = $zabbix::params::manage_choco,
   Boolean $manage_firewall                        = $zabbix::params::manage_firewall,
@@ -293,9 +303,9 @@ class zabbix::agent (
   $zbx_templates                                  = $zabbix::params::agent_zbx_templates,
   Array[Hash] $zbx_macros                         = [],
   Integer[1,4] $zbx_interface_type                = 1,
-  $agent_configfile_path                          = $zabbix::params::agent_configfile_path,
-  $pidfile                                        = $zabbix::params::agent_pidfile,
-  $servicename                                    = $zabbix::params::agent_servicename,
+  Optional[String[1]] $agent_configfile_path      = undef,
+  Optional[String[1]] $pidfile                    = undef,
+  Optional[String[1]] $servicename                = undef,
   Enum['console', 'file', 'system'] $logtype      = $zabbix::params::agent_logtype,
   Optional[Stdlib::Absolutepath] $logfile         = $zabbix::params::agent_logfile,
   $logfilesize                                    = $zabbix::params::agent_logfilesize,
@@ -326,7 +336,7 @@ class zabbix::agent (
   $timeout                                        = $zabbix::params::agent_timeout,
   $allowroot                                      = $zabbix::params::agent_allowroot,
   Optional[String[1]] $zabbix_user                = $zabbix::params::agent_zabbix_user,
-  $include_dir                                    = $zabbix::params::agent_include,
+  Optional[String[1]] $include_dir                = undef,
   $include_dir_purge                              = $zabbix::params::agent_include_purge,
   $unsafeuserparameters                           = $zabbix::params::agent_unsafeuserparameters,
   $userparameter                                  = $zabbix::params::agent_userparameter,
@@ -357,6 +367,49 @@ class zabbix::agent (
   String $service_type                            = $zabbix::params::service_type,
   Boolean $manage_startup_script                  = $zabbix::params::manage_startup_script,
 ) inherits zabbix::params {
+  # set variables for agent or agent2
+  if $install_agent2 and ($zabbix_package_agent != undef)  {
+    $zabbix_package_agent = $zabbix::params::zabbix_package_agent2
+  } else {
+    $zabbix_package_agent = $zabbix::params::zabbix_package_agent
+  }
+
+  if $install_agent2 and ($servicename != undef)  {
+    $servicename          = $zabbix::params::agent2_servicename
+  } else {
+    $servicename          = $zabbix::params::agent_servicename
+  }
+
+  if $install_agent2 and ($configfile_path != undef)  {
+    $configfile_path      = $zabbix::params::agent2_configfile_path
+  } else {
+    $configfile_path      = $zabbix::params::agent_configfile_path
+  }
+
+  if $install_agent2 and ($pidfile != undef)  {
+    $pidfile              = $zabbix::params::agent2_pidfile
+  } else {
+    $pidfile              = $zabbix::params::agent_pidfile
+  }
+
+  if $install_agent2 and ($include_dir != undef)  {
+    $include_dir          = $zabbix::params::agent2_include_dir
+  } else {
+    $include_dir          = $zabbix::params::agent_include_dir
+  }
+
+  if $install_agent2 and ($include_dir != undef)  {
+    $include_dir          = $zabbix::params::agent2_include_dir
+  } else {
+    $include_dir          = $zabbix::params::agent_include_dir
+  }
+  
+  if $install_agent2 and ($agent_binary_name != undef)  {
+    $agent_binary_name    = $zabbix::params::agent_binary_name
+  } else {
+    $agent_binary_name    = $zabbix::params::agent2_binary_name
+  }
+
   # Find if listenip is set. If not, we can set to specific ip or
   # to network name. If more than 1 interfaces are available, we
   # can find the ipaddress of this specific interface if listenip
@@ -442,6 +495,7 @@ class zabbix::agent (
       zabbix_user               => $zabbix_user,
       additional_service_params => $additional_service_params,
       service_type              => $service_type,
+      binary_name               => $agent_binary_name,
       service_name              => 'zabbix-agent',
       require                   => Package[$zabbix_package_agent],
     }

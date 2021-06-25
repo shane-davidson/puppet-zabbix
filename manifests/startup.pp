@@ -17,6 +17,7 @@ define zabbix::startup (
   Optional[Stdlib::Absolutepath] $server_configfile_path = undef,
   Optional[Zabbix::Databases] $database_type             = undef,
   Optional[String] $zabbix_user                          = undef,
+  Optional[String] $binary_name                          = undef,
   String $additional_service_params                      = '',
   String $service_type                                   = 'simple',
   Optional[Boolean] $manage_database                     = undef,
