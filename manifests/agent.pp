@@ -389,22 +389,22 @@ class zabbix::agent (
   }
 
   if $agent_configfile_path {
-    $configfile_path        = $agent_configfile_path
+    $_configfile_path        = $agent_configfile_path
   } else {
     if $install_agent2 {
-      $configfile_path       = $zabbix::params::agent2_configfile_path
+      $_configfile_path      = $zabbix::params::agent2_configfile_path
     } else {
-      $configfile_path       = $zabbix::params::agent_configfile_path
+      $_configfile_path      = $zabbix::params::agent_configfile_path
     }
   }
 
   if $pidfile {
-    $pid_file                = $pidfile
+    $_pidfile                = $pidfile
   } else {
     if $install_agent2 {
-      $pid_file              = $zabbix::params::agent2_pidfile
+      $_pidfile              = $zabbix::params::agent2_pidfile
     } else {
-      $pid_file              = $zabbix::params::agent_pidfile
+      $_pidfile              = $zabbix::params::agent_pidfile
     }
   }
 
@@ -514,8 +514,8 @@ class zabbix::agent (
   # Ensure that the correct config file is used.
   if $manage_startup_script {
     zabbix::startup { $_servicename:
-      pidfile                   => $pid_file,
-      agent_configfile_path     => $configfile_path,
+      pidfile                   => $_pidfile,
+      agent_configfile_path     => $_configfile_path,
       zabbix_user               => $zabbix_user,
       additional_service_params => $additional_service_params,
       service_type              => $service_type,
@@ -526,14 +526,14 @@ class zabbix::agent (
   }
 
   if $install_agent2 {
-    if $configfile_path != '/etc/zabbix/zabbix_agent2.conf' and $facts['kernel'] != 'windows' {
+    if $_configfile_path != '/etc/zabbix/zabbix_agent2.conf' and $facts['kernel'] != 'windows' {
       file { '/etc/zabbix/zabbix_agent2.conf':
         ensure  => absent,
         require => Package[$_package],
       }
     }
   } else {
-    if $configfile_path != '/etc/zabbix/zabbix_agentd.conf' and $facts['kernel'] != 'windows' {
+    if $_configfile_path != '/etc/zabbix/zabbix_agentd.conf' and $facts['kernel'] != 'windows' {
       file { '/etc/zabbix/zabbix_agentd.conf':
         ensure  => absent,
         require => Package[$_package],
@@ -558,7 +558,7 @@ class zabbix::agent (
   }
 
   # Configuring the zabbix-agent configuration file
-  file { $configfile_path:
+  file { $_configfile_path:
     ensure  => file,
     owner   => $agent_config_owner,
     group   => $agent_config_group,
@@ -577,7 +577,7 @@ class zabbix::agent (
     recurse => true,
     purge   => $include_dir_purge,
     notify  => Service[$_servicename],
-    require => File[$configfile_path],
+    require => File[$_configfile_path],
   }
 
   # Manage firewall

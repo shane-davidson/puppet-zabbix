@@ -162,6 +162,7 @@ class zabbix::params {
       $zabbix_package_agent     = 'zabbix-agent'
       $zabbix_package_agent2    = 'zabbix-agent2'
       $agent_configfile_path    = '/etc/zabbix/zabbix_agentd.conf'
+      $agent2_configfile_path   = '/etc/zabbix/zabbix_agentd.conf'
       $agent_config_owner       = 'zabbix'
       $agent_zabbix_user        = 'zabbix'
       $agent_config_group       = 'zabbix'
