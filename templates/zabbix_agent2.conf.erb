@@ -5,11 +5,11 @@
 
 ############ GENERAL PARAMETERS #################
 
-<% if @pidfile and @kernel != 'windows'%>
+<% if @_pidfile and @kernel != 'windows'%>
 ### Option: PidFile
 #	Name of PID file.
 #
-PidFile=<%= @pidfile %><% end %>
+PidFile=<%= @_pidfile %><% end %>
 
 <% if @logtype %>
 ### Option: LogType
