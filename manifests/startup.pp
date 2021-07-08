@@ -48,7 +48,7 @@ define zabbix::startup (
   } elsif $facts['os']['family'] in ['Debian', 'RedHat'] {
     # Currently other osfamily without systemd is not supported
     $osfamily_downcase = downcase($facts['os']['family'])
-    file { "/etc/init.d/${service_name}":
+    file { "/etc/init.d/${name}":
       ensure  => file,
       mode    => '0755',
       content => template("zabbix/${name}-${osfamily_downcase}.init.erb"),
