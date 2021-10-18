@@ -47,7 +47,7 @@ lockfile=/var/lock/subsys/zabbix-agent2
 start()
 {
     echo -n $"Starting Zabbix agent 2: "
-    daemon $user_conf $exec -c $conf &
+    nohup $exec -c $conf >/var/log/zabbix/zabbix_agent2.log 2>&1 &
     rv=$?
     echo
     [ $rv -eq 0 ] && touch $lockfile
